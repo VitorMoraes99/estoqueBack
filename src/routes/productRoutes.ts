@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const router = Router();
 const prisma = new PrismaClient();
 
-router.post("/", async (req: Request, res: Response) => {
+router.post("/register", async (req: Request, res: Response) => {
   const { name, description, image, value, quantity } = req.body;
   const product = await prisma.product.create({
     data: { name, description, image, value, quantity },
@@ -12,13 +12,11 @@ router.post("/", async (req: Request, res: Response) => {
   res.json(product);
 });
 
-// Listar todos os produtos
 router.get("/", async (req: Request, res: Response) => {
   const products = await prisma.product.findMany();
   res.json(products);
 });
 
-// Atualizar produto
 router.put("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, description, image, value, quantity } = req.body;
@@ -29,7 +27,6 @@ router.put("/:id", async (req: Request, res: Response) => {
   res.json(product);
 });
 
-// Deletar produto
 router.delete("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   await prisma.product.delete({
