@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: inventory_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: inventory_system
+      # Removendo as seguintes linhas
+      # MYSQL_USER: root
+      # MYSQL_PASSWORD: root
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - inventory_network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  inventory_network:
+    driver: bridge
